@@ -62,3 +62,7 @@ playground.xcworkspace
 # Other
 *.moved-aside
 *.xcuserstate
+
+# Assets
+Assets.xcassets/*
+
