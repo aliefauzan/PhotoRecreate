@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct Library: View {
-    let grids: [GridItem] = [GridItem(.adaptive(minimum: 80), spacing:1)]
+    let grids: [GridItem] = [GridItem(.adaptive(minimum: 80), spacing:5)]
     var body: some View {
         NavigationStack {
             ScrollView {
-                LazyVGrid(columns: grids, spacing: 1) {
+                LazyVGrid(columns: grids, spacing: 5) {
                     
                     Group {
                         Image(.photo10)
