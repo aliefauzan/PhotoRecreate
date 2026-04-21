@@ -9,46 +9,37 @@ import SwiftUI
 
 struct WorkoutView: View {
     
-    let data: [WorkoutItem] = [
-        .init(title: "Today", videos: 7),
-        .init(title: "Sunday", videos: 4),
-        .init(title: "4 April", videos: 5),
-        .init(title: "3 April", videos: 5),
-        .init(title: "1 April", videos: 5),
-        .init(title: "30 March", videos: 5),
-        .init(title: "29 March", videos: 5),
-        .init(title: "29 March", videos: 5),
-        .init(title: "29 March", videos: 5),
-        .init(title: "29 March", videos: 5),
-        .init(title: "29 March", videos: 5),
-        .init(title: "29 March", videos: 5),
-        .init(title: "29 March", videos: 5),
-    ]
+    let data = WorkoutItem.sampleData
     
     var body: some View {
-        VStack {
-            HStack {
+        NavigationStack {
+            VStack {
                 
-                Text("My Workouts")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                Spacer()
-            }
-            .padding(.horizontal)
-            
-            ScrollView{
-                VStack(spacing: 18) {
-                    ForEach(data) { item in
-                        WorkoutCardComponent(item: item)
-                    }
+                HStack {
+                    Text("My Workouts")
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                    Spacer()
                 }
                 .padding(.horizontal)
-                .padding(.top, 10)
+
+                ScrollView {
+                    VStack(spacing: 18) {
+                        ForEach(data) { item in
+                            NavigationLink {
+                                DailyWorkoutView(item: item)
+                            } label: {
+                                WorkoutCardComponent(item: item)
+                            }
+                            .buttonStyle(.plain)
+                        }
+                    }
+                    .padding(.horizontal)
+                    .padding(.top, 10)
+                }
             }
-            
+            .background(Color(.systemGray6))
         }
-        
-        .background(Color(.systemGray6))
     }
 }
 

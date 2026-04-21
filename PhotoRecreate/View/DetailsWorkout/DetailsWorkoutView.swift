@@ -10,15 +10,16 @@ import SwiftUI
 struct DetailsWorkoutView: View {
     
     @State private var selectedTab = 0
+    var workoutItemVideo: WorkoutItemVideo = .sampleVideos[0]
     
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
                 
-                RoundedRectangle(cornerRadius: 20)
-                    .fill(Color.gray.opacity(0.4))
-                    .frame(height: 200)
-                    .padding(.horizontal)
+                Image(workoutItemVideo.thumbnail)
+                    .resizable()
+                    .scaledToFill()
+                    
                 
                 Picker("", selection: $selectedTab) {
                     Text("Feedback").tag(0)
@@ -50,21 +51,9 @@ struct DetailsWorkoutView: View {
                 } else {
                     VStack(alignment: .leading, spacing: 16) {
                         
-                        Text("Bench Press")
-                            .font(.title3)
-                            .bold()
+                        AsyncImage(url: workoutItemVideo.exerciseType.icon) 
                         
-                        RoundedRectangle(cornerRadius: 20)
-                            .fill(Color.gray.opacity(0.4))
-                            .frame(height: 180)
-                        
-                        Text("""
-                            Lie flat on the bench with your feet planted firmly on the ground.
-
-                            Grip the bar slightly wider than shoulder-width apart. Lower the bar slowly to your chest while keeping your elbows at about a 45-degree angle.
-
-                            Push the bar back up explosively while maintaining control.
-                            """)
+                        Text(workoutItemVideo.exerciseType.explanation)
                         .font(.body)
                         .foregroundColor(.secondary)
                     }
@@ -73,7 +62,7 @@ struct DetailsWorkoutView: View {
             }
             .padding(.top)
         }
-        .navigationTitle("Details Workout")
+        .navigationTitle(workoutItemVideo.exerciseType.name)
         .toolbarTitleDisplayMode(.inlineLarge)
     }
 }
