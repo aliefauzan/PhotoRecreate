@@ -10,11 +10,11 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         TabView {
-            Tab("Library", systemImage: "photo.fill") {
-                Library()
+            Tab("Workout", systemImage: "dumbbell.fill") {
+                WorkoutView()
             }
-            Tab("Collections", systemImage: "heart.fill") {
-                Collections()
+            Tab("Library", systemImage: "photo") {
+                LibraryView()
             }
             Tab(role: .search){
                 SearchView()
