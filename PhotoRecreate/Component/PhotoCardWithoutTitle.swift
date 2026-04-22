@@ -7,20 +7,19 @@
 
 import SwiftUI
 
-    struct PhotoCardWithoutTitle: View {
-        let image: ImageResource
-        let cornerRadius: CGFloat
-        
-        var body: some View {
-            Image(image)
-                .resizable()
-                .scaledToFill()
-                .frame(maxWidth: .infinity)
-                .aspectRatio(1, contentMode: .fill)
-                .clipped()
-        }
+struct PhotoCardWithoutTitle: View {
+    let image: ImageResource
+    let cornerRadius: CGFloat
+    
+    var body: some View {
+        Image(image)
+            .resizable()
+            .scaledToFill()
+            .aspectRatio(contentMode: .fill)
+            .clipped()
     }
+}
 
 #Preview {
-    PhotoCardWithoutTitle(image: .photo10, cornerRadius: 25)
+    PhotoCardWithoutTitle(image: .workoutVideo1, cornerRadius: 25)
 }

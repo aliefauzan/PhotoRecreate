@@ -10,7 +10,7 @@ import SwiftUI
 struct LibraryView: View {
     
     let grids: [GridItem] = [
-        GridItem(.adaptive(minimum: 100), spacing: 5)
+        GridItem(.adaptive(minimum: 120), spacing: 1)
     ]
     
     let videos = WorkoutItemVideo.sampleVideos
@@ -18,13 +18,16 @@ struct LibraryView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                LazyVGrid(columns: grids, spacing: 5) {
+                LazyVGrid(columns: grids, spacing: 1) {
                     
                     ForEach(videos) { video in
-                        PhotoCardWithoutTitle(image: .photo10,cornerRadius: 10)
+                        NavigationLink {
+                            DetailsWorkoutView(workoutItemVideo: video)
+                        } label: {
+                            PhotoCardWithoutTitle(image: video.thumbnail,cornerRadius: 0)
+                        }
                             
                     }
-                    
                 }
             }
             .navigationTitle("Library")

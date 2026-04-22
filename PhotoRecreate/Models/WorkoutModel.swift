@@ -79,9 +79,7 @@ extension ExerciseType {
 extension WorkoutItemVideo {
     
     static let allImages: [ImageResource] = [
-        .photo10, .photo11, .photo12, .photo13,
-        .photo14, .photo15, .photo16, .photo17,
-        .photo18, .photo19, .photo20, .photo21
+        .workoutVideo1, .workoutVideo2, .workoutVideo3, .workoutVideo4, .workoutVideo5, .workoutVideo6
     ]
     
     static let sampleVideos: [WorkoutItemVideo] = (0..<30).map { _ in
