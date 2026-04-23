@@ -12,11 +12,16 @@ struct PhotoCardWithoutTitle: View {
     let cornerRadius: CGFloat
     
     var body: some View {
-        Image(image)
-            .resizable()
-            .scaledToFill()
-            .aspectRatio(contentMode: .fill)
+        Rectangle()
+     
+            .aspectRatio(1, contentMode: .fit)
+            .overlay {
+                Image(image)
+                    .resizable()
+                    .scaledToFill()
+            }
             .clipped()
+            .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
     }
 }
 

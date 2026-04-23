@@ -10,7 +10,9 @@ import SwiftUI
 struct LibraryView: View {
     
     let grids: [GridItem] = [
-        GridItem(.adaptive(minimum: 120), spacing: 1)
+        GridItem(.flexible(), spacing: 1),
+        GridItem(.flexible(), spacing: 1),
+        GridItem(.flexible(), spacing: 1)
     ]
     
     let videos = WorkoutItemVideo.sampleVideos
@@ -26,6 +28,7 @@ struct LibraryView: View {
                         } label: {
                             PhotoCardWithoutTitle(image: video.thumbnail,cornerRadius: 0)
                         }
+                        .buttonStyle(.plain)
                             
                     }
                 }
@@ -36,11 +39,6 @@ struct LibraryView: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     Image(systemName: "line.3.horizontal.decrease")
                 }
-                ToolbarSpacer(placement: .topBarTrailing)
-                
-                ToolbarItem(placement: .topBarTrailing) {
-                    Text("Select")
-                }
             }
         }
     }
@@ -49,4 +47,3 @@ struct LibraryView: View {
 #Preview {
     LibraryView()
 }
-
