@@ -108,12 +108,44 @@ extension WorkoutItem {
             value: -Int.random(in: 0...5),
             to: Date()
         )!
+
+        let videosForThatDay = WorkoutItemVideo.sampleVideos.filter {
+            Calendar.current.isDate($0.date, inSameDayAs: randomDate)
+        }
         
         return WorkoutItem(
-            thumbnail: WorkoutItemVideo.allImages.randomElement()!,
+            thumbnail: videosForThatDay.first?.thumbnail ?? .workoutVideo1,
             date: randomDate,
-            videos: Array(WorkoutItemVideo.sampleVideos.shuffled().prefix(Int.random(in: 1...5)))
+            videos: videosForThatDay
         )
     }
 }
 
+extension Array where Element == WorkoutItemVideo {
+    func videos(on date: Date, exerciseTypeName: String? = nil) -> [WorkoutItemVideo] {
+        filter { video in
+            let isSameDay = Calendar.current.isDate(video.date, inSameDayAs: date)
+            let matchesExerciseType = exerciseTypeName == nil || video.exerciseType.name == exerciseTypeName
+            return isSameDay && matchesExerciseType
+        }
+    }
+}
+
+extension Array where Element == WorkoutItem {
+    func workoutItem(on date: Date) -> WorkoutItem? {
+        first { Calendar.current.isDate($0.date, inSameDayAs: date) }
+    }
+
+    mutating func addVideo(_ video: WorkoutItemVideo, thumbnail: ImageResource = .workoutVideo1) {
+        if let index = firstIndex(where: { Calendar.current.isDate($0.date, inSameDayAs: video.date) }) {
+            self[index].videos.append(video)
+        } else {
+            let newItem = WorkoutItem(
+                thumbnail: thumbnail,
+                date: video.date,
+                videos: [video]
+            )
+            append(newItem)
+        }
+    }
+}

@@ -7,24 +7,33 @@
 import SwiftUI
 
 struct DailyWorkoutView: View {
-    let item: WorkoutItem
-    var workoutVideosGrouped : [String : [WorkoutItemVideo]] {
-        Dictionary(grouping: WorkoutItemVideo.sampleVideos, by: {$0.exerciseType.name})
+    @State private var item: WorkoutItem
+
+    init(item: WorkoutItem) {
+        _item = State(initialValue: item)
     }
 
-    
+    var groupedVideos: [String: [WorkoutItemVideo]] {
+        Dictionary(grouping: item.videos, by: { $0.exerciseType.name })
+    }
+
     var body: some View {
         NavigationStack {
             ScrollView {
-                
-                ForEach(workoutVideosGrouped.keys.sorted(), id: \.self) {category in
-                    Segment(title: category, cardType: .noTitle, workoutVideos: workoutVideosGrouped[category]!)
+                ForEach(groupedVideos.keys.sorted(), id: \.self) { category in
+                    Segment(
+                        title: category,
+                        cardType: .noTitle,
+                        workoutVideos: groupedVideos[category] ?? []
+                    )
                 }
             }
             .navigationTitle(item.title)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button(action: {}) {
+                    Button {
+                        addNewWorkoutItemVideo()
+                    } label: {
                         Image(systemName: "plus")
                     }
                 }
@@ -33,6 +42,21 @@ struct DailyWorkoutView: View {
     }
 }
 
+extension DailyWorkoutView {
+    private func addNewWorkoutItemVideo() {
+        let randomExercise = ExerciseType.sample.randomElement() ?? ExerciseType.sample[0]
+
+        let newVideo = WorkoutItemVideo(
+            video: URL(string: "https://example.com/dummy-video.mp4")!,
+            thumbnail: WorkoutItemVideo.allImages.randomElement() ?? .workoutVideo1,
+            date: item.date,
+            exerciseType: randomExercise
+        )
+
+        item.videos.append(newVideo)
+    }
+}
+
 #Preview {
-    DailyWorkoutView(item : WorkoutItem.sampleData[0])
+    DailyWorkoutView(item: WorkoutItem.sampleData[0])
 }

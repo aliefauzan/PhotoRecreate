@@ -24,7 +24,7 @@ struct LibraryView: View {
                     
                     ForEach(videos) { video in
                         NavigationLink {
-                            DetailsWorkoutView(workoutItemVideo: video)
+                            DetailsWorkoutViewTesting(workoutItemVideo: video)
                         } label: {
                             PhotoCardWithoutTitle(image: video.thumbnail,cornerRadius: 0)
                         }

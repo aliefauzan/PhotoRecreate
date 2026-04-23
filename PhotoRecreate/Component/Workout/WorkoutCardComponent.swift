@@ -3,10 +3,7 @@ import SwiftUI
 struct WorkoutCardComponent: View {
     
     let item: WorkoutItem
-    
-    
-    @State private var isPressed = false
-    
+
     var body: some View {
         HStack(spacing: 12) {
             
@@ -33,8 +30,6 @@ struct WorkoutCardComponent: View {
                 .fill(Color(.systemBackground))
                 .shadow(color: .black.opacity(0.08), radius: 10, x: 0, y: 6)
         )
-        .scaleEffect(isPressed ? 0.97 : 1.0)
-        .animation(.easeOut(duration: 0.15), value: isPressed)
     }
 }
 
