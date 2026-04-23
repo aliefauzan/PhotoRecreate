@@ -28,7 +28,10 @@ struct DailyWorkoutView: View {
                     )
                 }
             }
+            
             .navigationTitle(item.title)
+            .toolbarTitleDisplayMode(.inlineLarge)
+            
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
