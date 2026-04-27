@@ -10,6 +10,7 @@ class ExerciseCorrectionService {
         let url = URL(string: "\(baseURL)/api/video/upload?type=\(exerciseType)")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
+        request.timeoutInterval = 180 // 3 minutes — video analysis takes a while
         
         let boundary = "Boundary-\(UUID().uuidString)"
         request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
@@ -26,10 +27,25 @@ class ExerciseCorrectionService {
         
         request.httpBody = body
         
+        print("[Analysis] Uploading \(fileData.count / 1024)KB to \(url)")
+        
         let (data, response) = try await URLSession.shared.data(for: request)
         
-        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+        guard let httpResponse = response as? HTTPURLResponse else {
             throw URLError(.badServerResponse)
+        }
+        
+        print("[Analysis] Server responded with status \(httpResponse.statusCode)")
+        
+        guard httpResponse.statusCode == 200 else {
+            let body = String(data: data, encoding: .utf8) ?? "no body"
+            print("[Analysis] Error body: \(body)")
+            throw URLError(.badServerResponse)
+        }
+        
+        // Print raw JSON for debugging
+        if let jsonString = String(data: data, encoding: .utf8) {
+            print("[Analysis] Response JSON: \(jsonString.prefix(500))")
         }
         
         let decoder = JSONDecoder()
@@ -40,3 +56,4 @@ class ExerciseCorrectionService {
         self.baseURL = newURL
     }
 }
+

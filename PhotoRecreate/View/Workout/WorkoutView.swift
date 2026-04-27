@@ -9,7 +9,7 @@ import SwiftUI
 
 struct WorkoutView: View {
     
-    let data = WorkoutItem.sampleData
+    @State private var data = WorkoutItem.sampleData
     
     var body: some View {
         NavigationStack {
@@ -25,9 +25,9 @@ struct WorkoutView: View {
 
                 ScrollView {
                     VStack(spacing: 18) {
-                        ForEach(data) { item in
+                        ForEach($data) { $item in
                             NavigationLink {
-                                DailyWorkoutView(item: item)
+                                DailyWorkoutView(item: $item)
                             } label: {
                                 WorkoutCardComponent(item: item)
                             }

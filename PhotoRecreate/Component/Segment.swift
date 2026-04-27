@@ -39,9 +39,18 @@ struct Segment: View {
                     HStack(spacing: 10){
                         ForEach(workoutVideos) {video in
                             NavigationLink {
-                                DetailsWorkoutView(workoutItemVideo: video)
+                                DetailsWorkoutView(workoutItemVideo: video, analysisResult: video.analysisResult, thumbnailImage: video.thumbnailImage)
                             } label: {
-                                PhotoCard(imageResource: video.thumbnail, cornerRadius: 25, cardType: cardType, text: video.exerciseType.name)
+                                if let thumbImage = video.thumbnailImage {
+                                    Image(uiImage: thumbImage)
+                                        .resizable()
+                                        .scaledToFill()
+                                        .frame(height: cardType == .memory ? 300 : 150)
+                                        .frame(width: cardType == .memory ? 300 : 150)
+                                        .clipShape(RoundedRectangle(cornerRadius: 25))
+                                } else {
+                                    PhotoCard(imageResource: video.thumbnail, cornerRadius: 25, cardType: cardType, text: video.exerciseType.name)
+                                }
                             }
                         }
                     }

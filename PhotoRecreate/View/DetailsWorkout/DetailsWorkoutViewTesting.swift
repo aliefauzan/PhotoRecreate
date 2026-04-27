@@ -12,6 +12,7 @@ struct DetailsWorkoutViewTesting: View {
     
     @State private var selectedTab = 0
     var workoutItemVideo: WorkoutItemVideo = .sampleVideos[1]
+    var analysisResult: AnalysisResult?
     
     @State private var player = AVPlayer(url: Bundle.main.url(forResource: "IMG_2530", withExtension: "MOV")!)
     
@@ -40,13 +41,15 @@ struct DetailsWorkoutViewTesting: View {
                                 .font(.headline)
                         }
                         
-                        Text("""
-                            Your form is generally good, but your elbows are slightly flaring out during the movement. Try to keep them more tucked to reduce shoulder strain.
-
-                            Also, control the eccentric (lowering) phase more slowly to improve muscle engagement and stability.
-                            """)
-                        .font(.body)
-                        .foregroundColor(.secondary)
+                        if let analysisResult {
+                            Text(analysisResult.summaryFeedback)
+                                .font(.body)
+                                .foregroundColor(.secondary)
+                        } else {
+                            Text("Run an analysis from the Search tab to see AI feedback here.")
+                                .font(.body)
+                                .foregroundColor(.secondary)
+                        }
                     }
                     .padding(.horizontal)
                     

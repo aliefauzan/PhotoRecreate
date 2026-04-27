@@ -18,6 +18,8 @@ struct WorkoutItemVideo: Identifiable {
     let thumbnail: ImageResource
     let date: Date
     var exerciseType: ExerciseType
+    var analysisResult: AnalysisResult?
+    var thumbnailImage: UIImage?
 }
 
 struct ExerciseType {
