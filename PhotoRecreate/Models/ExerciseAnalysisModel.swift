@@ -24,6 +24,21 @@ struct AnalysisResult: Decodable {
         case snapshotTimestamp = "snapshot_timestamp"
     }
 
+    /// Create a minimal AnalysisResult from saved data (for persistence)
+    init(type: String, feedback: String) {
+        self.type = type
+        self.processed = true
+        self.fileName = ""
+        self.details = []
+        self.llmFeedback = feedback
+        self.motionHistory = nil
+        self.counter = nil
+        self.mistakeCount = nil
+        self.snapshotURL = nil
+        self.snapshotStage = nil
+        self.snapshotTimestamp = nil
+    }
+
     var primarySnapshotFrame: String? {
         snapshotURL ?? details.first(where: { $0.frame != nil })?.frame
     }

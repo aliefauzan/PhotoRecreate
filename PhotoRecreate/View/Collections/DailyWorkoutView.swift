@@ -10,6 +10,7 @@ import SwiftUI
 
 struct DailyWorkoutView: View {
     @Binding var item: WorkoutItem
+    var store: WorkoutStore
     @State private var showAddVideoSheet = false
 
     var groupedVideos: [String: [WorkoutItemVideo]] {
@@ -40,6 +41,7 @@ struct DailyWorkoutView: View {
         .sheet(isPresented: $showAddVideoSheet) {
             AddVideoSheet(workoutDate: item.date) { newVideo in
                 item.videos.append(newVideo)
+                store.saveVideo(newVideo) // persist to disk
             }
         }
     }
@@ -278,6 +280,6 @@ private struct AddVideoSheet: View {
 
 #Preview {
     NavigationStack {
-        DailyWorkoutView(item: .constant(WorkoutItem.sampleData[0]))
+        DailyWorkoutView(item: .constant(WorkoutItem.sampleData[0]), store: WorkoutStore())
     }
 }
